@@ -1,0 +1,46 @@
+# Project: KVstore-cn
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = kvstore.o skiplist.o memtab.o correctness.o FileBuf.o KVStestmain.o persistence.o
+LINKOBJ  = kvstore.o skiplist.o memtab.o correctness.o FileBuf.o KVStestmain.o persistence.o
+LIBS     = -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = KVstore-cn.exe
+CXXFLAGS = $(CXXINCS) -std=c++11
+CFLAGS   = $(INCS) -std=c++11
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+kvstore.o: kvstore.cc
+	$(CPP) -c kvstore.cc -o kvstore.o $(CXXFLAGS)
+
+skiplist.o: skiplist.cc
+	$(CPP) -c skiplist.cc -o skiplist.o $(CXXFLAGS)
+
+memtab.o: memtab.cc
+	$(CPP) -c memtab.cc -o memtab.o $(CXXFLAGS)
+
+correctness.o: correctness.cc
+	$(CPP) -c correctness.cc -o correctness.o $(CXXFLAGS)
+
+FileBuf.o: FileBuf.cc
+	$(CPP) -c FileBuf.cc -o FileBuf.o $(CXXFLAGS)
+
+KVStestmain.o: KVStestmain.cc
+	$(CPP) -c KVStestmain.cc -o KVStestmain.o $(CXXFLAGS)
+
+persistence.o: persistence.cc
+	$(CPP) -c persistence.cc -o persistence.o $(CXXFLAGS)
