@@ -1,0 +1,29 @@
+#pageDiv{
+    padding: 24px;
+    min-height: 85vh;
+    height: auto;
+    background: rgba(255, 255, 255, 1);
+    overflow: hidden;
+}
+#SearchBar {
+    /*margin-left: 90%;*/
+    /*position: absolute;*/
+    /*left: 50%;*/
+}
+#CarouselImages{
+    width: 600px;
+}
+#Carousel{
+    /*margin-left: 100%;*/
+}
+.HomeSpace{
+    position: absolute;
+    left: 50%;
+    margin-left: -300px;
+    /*margin-left: 30%;*/
+}
+#SpinCSS{
+    padding-top: 10px;
+    min-height: 10vh;
+    /*background: rgba(255, 255, 255, 1);*/
+}

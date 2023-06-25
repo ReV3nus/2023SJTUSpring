@@ -1,0 +1,50 @@
+#SiteLogo{
+    float:left;
+    width:200px;
+    height:45px;
+    margin: 8px 24px 16px 0;
+}
+#UserAvatar{
+    float:right;
+    width:250px;
+    height:40px;
+}
+#RootHeader{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    /*zIndex: 1;*/
+    width: 100%;
+}
+#RootContent{
+    padding: 0 50px;
+}
+#RootFooter{
+    text-align: center;
+}
+#RootHeader span{
+    font-size: 14px;
+}
+#LogoFont{
+    height:45px;
+    /*visibility: hidden;*/
+    filter: drop-shadow(0 105px #fff);
+    transform: translateY(-100px);
+}
+#logo{
+    height:45px;
+}
+
+.greeting {
+    color:white;
+    font-size: medium;
+    margin-right: 10px;
+    font-weight:bold;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+#SpinCSS{
+    padding-top: 10px;
+    min-height: 10vh;
+    /*background: rgba(255, 255, 255, 1);*/
+}

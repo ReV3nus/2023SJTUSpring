@@ -1,0 +1,33 @@
+#pageDiv{
+    padding: 24px;
+    min-height: 85vh;
+    height: auto;
+    background: rgba(255, 255, 255, 1);
+    overflow: hidden;
+}
+.OrderSpace{
+    left: 50%;
+    margin-left: 5vw;
+    width: 80vw;
+    height: auto;
+    overflow: hidden;
+
+}
+#OrderCard{
+    width:60vw;
+}
+#SpinCSS{
+    padding-top: 10px;
+    min-height: 10vh;
+    /*background: rgba(255, 255, 255, 1);*/
+}
+#SpinCSS{
+    padding-top: 10px;
+    min-height: 10vh;
+    /*background: rgba(255, 255, 255, 1);*/
+}
+#SpinCSS{
+    padding-top: 10px;
+    min-height: 10vh;
+    /*background: rgba(255, 255, 255, 1);*/
+}

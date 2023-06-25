@@ -1,0 +1,25 @@
+#pageDiv{
+    padding: 24px;
+    min-height: 85vh;
+    height: auto;
+    background: rgba(255, 255, 255, 1);
+    overflow: hidden;
+}
+.StaSpace{
+    /*left: 50%;*/
+    margin-left: 5vw;
+    width: 80vw;
+    height: auto;
+    overflow: hidden;
+    min-height: 50vh;
+
+}
+#StaCard{
+    width:60vw;
+    min-height: 20vh;
+}
+#SpinCSS{
+    padding-top: 10px;
+    min-height: 10vh;
+    /*background: rgba(255, 255, 255, 1);*/
+}

@@ -1,0 +1,15 @@
+#pageDiv{
+    padding: 24px;
+    min-height: 85vh;
+    height: auto;
+    background: rgba(255, 255, 255, 1);
+    overflow: hidden;
+}
+#SpinCSS{
+    /*margin-left:10vw;*/
+    /*background: rgba(255, 255, 255, 1);*/
+}
+#detailSpace{
+    margin-left:10vw;
+    margin-top:10vh;
+}
