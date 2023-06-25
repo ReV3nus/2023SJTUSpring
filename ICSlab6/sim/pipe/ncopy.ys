@@ -1,0 +1,221 @@
+#qianweike 521021910760
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len words to dst.
+# Return the number of positive words (>0) contained in src.
+#
+# Include your name and ID here.
+#
+# Describe how and why you modified the baseline code.
+#1*2,iadd
+##################################################################
+# Do not modify this portion
+# Function prologue.
+# %rdi = src, %rsi = dst, %rdx = len
+ncopy:
+
+##################################################################
+# You can modify this portion
+	# Loop header
+	xorq %rax,%rax		# count = 0;
+	irmovq $1,%rbp
+	iaddq $-9,%rdx
+	jle ELoop
+	
+	
+######################################
+#Calc 10*1
+######################################
+	
+Loop:	
+	mrmovq (%rdi), %r10
+	mrmovq 8(%rdi),%r9	
+	rmmovq %r10, (%rsi)	
+	rmmovq %r9, 8(%rsi)
+	andq %r10, %r10	
+	jle Npos1	
+	addq %rbp, %rax	
+Npos1:	andq %r9, %r9
+	jle Npos2
+	addq %rbp, %rax
+Npos2:
+
+	
+	
+	mrmovq 16(%rdi), %r10
+	mrmovq 24(%rdi),%r9	
+	rmmovq %r10, 16(%rsi)
+	rmmovq %r9, 24(%rsi)
+	andq %r10, %r10
+	jle Npos3
+	addq %rbp, %rax
+Npos3:	andq %r9, %r9
+	jle Npos4
+	addq %rbp, %rax
+Npos4:
+	
+
+
+	mrmovq 32(%rdi), %r10
+	mrmovq 40(%rdi),%r9	
+	rmmovq %r10, 32(%rsi)
+	rmmovq %r9, 40(%rsi)
+	andq %r10, %r10
+	jle Npos5
+	addq %rbp, %rax
+Npos5:	andq %r9, %r9
+	jle Npos6
+	addq %rbp, %rax
+Npos6:
+	
+	
+	
+
+	mrmovq 48(%rdi), %r10
+	mrmovq 56(%rdi),%r9	
+	rmmovq %r10, 48(%rsi)
+	rmmovq %r9, 56(%rsi)
+	andq %r10, %r10
+	jle Npos7
+	addq %rbp, %rax
+Npos7:	andq %r9, %r9
+	jle Npos8
+	addq %rbp, %rax
+Npos8:
+
+
+	mrmovq 64(%rdi), %r10
+	mrmovq 72(%rdi),%r9	
+	rmmovq %r10, 64(%rsi)
+	rmmovq %r9, 72(%rsi)
+	andq %r10, %r10
+	jle Npos9
+	addq %rbp, %rax
+Npos9:	andq %r9, %r9
+	jle Npos10
+	addq %rbp, %rax
+Npos10:
+
+	iaddq $80, %rdi
+	iaddq $80, %rsi
+	
+	
+
+
+	iaddq $-10,%rdx		# len- > 0?
+	jg Loop			# if so, goto Loop:
+	
+	
+####################################
+#Calc the remaining
+#remaing len= -9->0==>0->9   to
+# 0 1->4 5->9
+#   B14  B59
+# 0 to %rcx   	1
+# 8 to %rbx	2
+# 16 to %r8	3
+# 24 to %r9	4
+# 32 to %r10	5
+# 40 to %r11	6
+# 48 to %r12	7
+# 56 to %r13	8
+# 64 to %r14	9
+####################################	
+ELoop:
+	iaddq $5,%rdx
+	jg B59
+B04:	iaddq $2,%rdx #-4~0->-2~2
+	jl B01
+	mrmovq (%rdi),%rcx
+	jg B34
+	mrmovq 8(%rdi),%rbx
+	jmp B2
+	
+B59:	
+	mrmovq (%rdi),%rcx
+	mrmovq 8(%rdi),%rbx
+	mrmovq 16(%rdi),%r8
+	mrmovq 24(%rdi),%r9
+	mrmovq 32(%rdi),%r10	
+	iaddq $-3,%rdx
+	jl B56
+	mrmovq 40(%rdi),%r11
+	mrmovq 48(%rdi),%r12
+	jg B89
+	jmp B7
+B34:
+	mrmovq 8(%rdi),%rbx
+	mrmovq 16(%rdi),%r8
+	subq %rbp,%rdx
+	je B3
+	mrmovq 24(%rdi),%r9
+	jmp B4
+B01:	addq %rbp,%rdx
+	mrmovq (%rdi),%rcx
+	je B1
+	ret
+B56:	addq %rbp,%rdx
+	jl B5
+	mrmovq 40(%rdi),%r11
+	jmp B6
+B89:	subq %rbp,%rdx
+	mrmovq 56(%rdi),%r13
+	mrmovq 64(%rdi),%r14
+	je B8
+	
+B9:	rmmovq %r14,64(%rsi)
+	andq %r14,%r14
+	jle B8
+	addq %rbp,%rax
+	
+B8:	rmmovq %r13,56(%rsi)
+	andq %r13,%r13
+	jle B7
+	addq %rbp,%rax
+	
+B7:	rmmovq %r12,48(%rsi)
+	andq %r12,%r12
+	jle B6
+	addq %rbp,%rax
+		
+B6:	rmmovq %r11,40(%rsi)
+	andq %r11,%r11
+	jle B5
+	addq %rbp,%rax
+		
+B5:	rmmovq %r10,32(%rsi)
+	andq %r10,%r10
+	jle B4
+	addq %rbp,%rax
+		
+B4:	rmmovq %r9,24(%rsi)
+	andq %r9,%r9
+	jle B3
+	addq %rbp,%rax
+		
+B3:	rmmovq %r8,16(%rsi)
+	andq %r8,%r8
+	jle B2
+	addq %rbp,%rax
+		
+B2:	rmmovq %rbx,8(%rsi)
+	andq %rbx,%rbx
+	jle B1
+	addq %rbp,%rax
+		
+B1:	rmmovq %rcx,(%rsi)
+	andq %rcx,%rcx
+	jle Done
+	addq %rbp,%rax
+
+	
+	
+##################################################################
+# Do not modify the following section of code
+# Function epilogue.
+Done:
+	ret
+##################################################################
+# Keep the following label at the end of your function
+End:
+#/* $end ncopy-ys */

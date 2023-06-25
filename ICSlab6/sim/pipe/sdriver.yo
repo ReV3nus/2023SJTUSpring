@@ -1,0 +1,116 @@
+                            | #######################################################################
+                            | # Test for copying block of size 4;
+                            | #######################################################################
+0x000:                      | 	.pos 0
+0x000: 30f40002000000000000 | main:	irmovq Stack, %rsp  	# Set up stack pointer
+                            | 
+                            | 	# Set up arguments for copy function and then invoke it
+0x00a: 30f20400000000000000 | 	irmovq $4, %rdx		# src and dst have 4 elements
+0x014: 30f65801000000000000 | 	irmovq dest, %rsi	# dst array
+0x01e: 30f72001000000000000 | 	irmovq src, %rdi	# src array
+0x028: 803200000000000000   | 	call ncopy		 
+0x031: 00                   | 	halt			# should halt with num nonzeros in %rax
+0x032:                      | StartFun:
+                            | #qianweike 521021910760
+                            | #/* $begin ncopy-ys */
+                            | ##################################################################
+                            | # ncopy.ys - Copy a src block of len words to dst.
+                            | # Return the number of positive words (>0) contained in src.
+                            | #
+                            | # Include your name and ID here.
+                            | #
+                            | # Describe how and why you modified the baseline code.
+                            | #
+                            | ##################################################################
+                            | # Do not modify this portion
+                            | # Function prologue.
+                            | # %rdi = src, %rsi = dst, %rdx = len
+0x032:                      | ncopy:
+                            | 
+                            | ##################################################################
+                            | # You can modify this portion
+                            | 	# Loop header
+0x032: 6300                 | 	xorq %rax,%rax		# count = 0;
+0x034: 6222                 | 	andq %rdx,%rdx		# len <= 0?
+0x036: 711b01000000000000   | 	jle Done		# if so, goto Done:
+0x03f: c0f2ffffffffffffffff | 	iaddq $-1,%rdx
+0x049: 73df00000000000000   | 	je ELoop
+0x052: 50a70000000000000000 | Loop:	mrmovq (%rdi), %r10	# read val from src...
+0x05c: 40a60000000000000000 | 	rmmovq %r10, (%rsi)	# ...and store it to dst
+0x066: 62aa                 | 	andq %r10, %r10		# val <= 0?
+0x068: 717b00000000000000   | 	jle Npos1		# if so, goto Npos:
+0x071: c0f00100000000000000 | 	iaddq $1, %rax		# count++
+0x07b: c0f70800000000000000 | Npos1:	iaddq $8, %rdi		# src++
+0x085: c0f60800000000000000 | 	iaddq $8, %rsi		# dst++
+                            | 	
+                            | 	
+0x08f: 50a70000000000000000 | 	mrmovq (%rdi), %r10
+0x099: 40a60000000000000000 | 	rmmovq %r10, (%rsi)
+0x0a3: 62aa                 | 	andq %r10, %r10
+0x0a5: 71b800000000000000   | 	jle Npos2
+0x0ae: c0f00100000000000000 | 	iaddq $1, %rax
+0x0b8: c0f70800000000000000 | Npos2:	iaddq $8, %rdi
+0x0c2: c0f60800000000000000 | 	iaddq $8, %rsi
+                            | 
+0x0cc: c0f2feffffffffffffff | 	iaddq $-2,%rdx		# len- > 0?
+0x0d6: 765200000000000000   | 	jg Loop			# if so, goto Loop:
+0x0df: c0f20100000000000000 | ELoop:	iaddq $1,%rdx
+0x0e9: 711b01000000000000   | 	jle Done
+0x0f2: 50a70000000000000000 | 	mrmovq (%rdi),%r10
+0x0fc: 40a60000000000000000 | 	rmmovq %r10,(%rsi)
+0x106: 62aa                 | 	andq %r10,%r10
+0x108: 711b01000000000000   | 	jle Done
+0x111: c0f00100000000000000 | 	iaddq $1,%rax
+                            | ##################################################################
+                            | # Do not modify the following section of code
+                            | # Function epilogue.
+0x11b:                      | Done:
+0x11b: 90                   | 	ret
+                            | ##################################################################
+                            | # Keep the following label at the end of your function
+0x11c:                      | End:
+                            | #/* $end ncopy-ys */
+0x11c:                      | EndFun:
+                            | 
+                            | ###############################
+                            | # Source and destination blocks 
+                            | ###############################
+0x120:                      | 	.align 8
+0x120:                      | src:
+0x120: 0100000000000000     | 	.quad 1
+0x128: 0200000000000000     | 	.quad 2
+0x130: fdffffffffffffff     | 	.quad -3
+0x138: fcffffffffffffff     | 	.quad -4
+0x140: fadebc0000000000     | 	.quad 0xbcdefa # This shouldn't get moved
+                            | 
+0x150:                      | 	.align 16
+0x150:                      | Predest:
+0x150: fadebc0000000000     | 	.quad 0xbcdefa
+0x158:                      | dest:
+0x158: abefcd0000000000     | 	.quad 0xcdefab
+0x160: abefcd0000000000     | 	.quad 0xcdefab
+0x168: abefcd0000000000     | 	.quad 0xcdefab
+0x170: abefcd0000000000     | 	.quad 0xcdefab
+0x178:                      | Postdest:
+0x178: bcfade0000000000     | 	.quad 0xdefabc
+                            | 
+0x180:                      | .align 8
+                            | # Run time stack
+0x180: 0000000000000000     | 	.quad 0
+0x188: 0000000000000000     | 	.quad 0
+0x190: 0000000000000000     | 	.quad 0
+0x198: 0000000000000000     | 	.quad 0
+0x1a0: 0000000000000000     | 	.quad 0
+0x1a8: 0000000000000000     | 	.quad 0
+0x1b0: 0000000000000000     | 	.quad 0
+0x1b8: 0000000000000000     | 	.quad 0
+0x1c0: 0000000000000000     | 	.quad 0
+0x1c8: 0000000000000000     | 	.quad 0
+0x1d0: 0000000000000000     | 	.quad 0
+0x1d8: 0000000000000000     | 	.quad 0
+0x1e0: 0000000000000000     | 	.quad 0
+0x1e8: 0000000000000000     | 	.quad 0
+0x1f0: 0000000000000000     | 	.quad 0
+0x1f8: 0000000000000000     | 	.quad 0
+                            | 
+0x200:                      | Stack:
